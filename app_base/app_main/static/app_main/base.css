@@ -1,0 +1,488 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f7fa;
+    margin: 0;
+    padding: 40px 0;
+  }
+  
+  .container {
+    max-width: 700px;
+    margin: auto;
+    padding: 0 20px;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 32px;
+  }
+  
+  /* Комментарий - визуально выделенная карточка */
+  .comment-card {
+    background: #ffffff;
+    border: 4px solid #ddd;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .comment-card:hover {
+    background-color: #f9f9f9;
+  }
+  
+  /* Шапка комментария */
+  .comment-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .comment-header img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+    border: 1px solid #ccc;
+  }
+  
+  /* Имя пользователя + дата */
+  .comment-meta {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .comment-meta span {
+    display: block;
+    font-weight: normal;
+    font-size: 14px;
+    color: #888;
+    margin-top: 2px;
+  }
+  
+  /* Текст комментария */
+  .comment-text {
+    margin: 10px 0 15px;
+    color: #444;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  
+  /* Кнопки действий */
+  .comment-actions button {
+    background: none;
+    border: none;
+    color: #3498db;
+    cursor: pointer;
+    padding: 5px 0;
+    margin-right: 10px;
+    font-size: 14px;
+    transition: color 0.2s ease;
+  }
+  
+  .comment-actions button:hover {
+    color: #216fa2;
+  }
+  
+  /* Ответы на комментарии */
+  .replies {
+    margin-top: 15px;
+    padding-left: 20px;
+    border-left: 3px dashed #d0d0d0;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  /* Кнопка "Добавить комментарий" */
+  .add-comment-btn {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 40px auto 0;
+    background: #3498db;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .add-comment-btn:hover {
+    background: #2980b9;
+  }
+  
+  /* Модальное окно */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 14px;
+    max-width: 500px;
+    position: relative;
+  }
+  
+  .modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 22px;
+  }
+  
+  .modal-content input,
+  .modal-content textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .modal-content button {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .close {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 22px;
+    cursor: pointer;
+  }
+  
+  .reply-to-comment {
+    font-size: 14px;
+    color: #555;
+}
+
+.reply-to-comment p {
+    margin: 5px 0;
+    font-style: italic;
+}
+button, .close {
+    cursor: pointer;
+}
+
+.comment-img {
+    max-width: 180px; /* Ограничиваем ширину изображения до 100% от контейнера */
+    max-height: 180px; /* Ограничиваем высоту изображения (можно изменить на нужную) */
+    object-fit: contain; /* Сохраняем пропорции изображения */
+}
+
+/* кнопка стилизации для файлимпута */
+
+
+.file-upload-wrapper {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family: sans-serif;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  padding: 8px 7px;
+  background-color: #3498db;
+  color: white;
+  font-size: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  margin-bottom: 6px;
+}
+
+.custom-file-upload:hover {
+  background-color: #0056b3;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.file-name {
+  font-size: 13px;
+  color: #0f0e0e;
+  word-break: break-all;
+}
+
+.remove-file {
+  padding: 2px 8px;
+  font-size: 8px;
+  color: white;
+  background-color: #dc3545;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  
+}
+
+.remove-file:hover {
+  background-color: #a71d2a;
+}
+
+
+.sort-container {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.sort-container select, .sort-container button {
+  margin-left: 10px;
+}
+
+.comment-card {
+  margin-bottom: 20px;
+}
+
+
+/** модальные окна регистрации и авторизации**/
+.modal-btn {
+  margin: 2px;
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: auto;
+  float: right; /* Выравнивание по правому краю */
+  
+}
+
+.modal-btn:hover {
+  background-color: #2164a6;
+}
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0; top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+}
+
+.modal-container {
+  background: white;
+  margin: 5% auto;
+  max-width: 400px;
+  width: 90%;
+  padding: 20px;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.2);
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+
+.modal-wrapper h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-input {
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+.modal-input:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.modal-submit {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #3498db;
+  border: none;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.modal-submit:hover {
+  background-color: #2164a6;
+}
+
+.modal-links {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.modal-links a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.recover {
+  text-align: right;
+  font-size: 13px;
+}
+
+@media (max-width: 480px) {
+  .modal-container {
+    padding: 15px;
+  }
+}
+
+.original-comment {
+  padding: 10px;
+  background-color: #f4f4f4;
+  border-left: 3px solid #ccc;
+  margin-bottom: 15px;
+  white-space: pre-wrap;
+}
+
+/* Контейнер для элементов */
+.auth-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Расстояние между элементами */
+  justify-content: flex-start; /* По умолчанию элементы выравниваются слева */
+}
+
+/* Стиль для выпадающего меню */
+.auth-container select {
+  padding: 10px;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Стиль для кнопок */
+.auth-container button {
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Изменение фона при наведении на кнопки */
+.auth-container button:hover {
+  background-color: #2980b9;
+}
+
+/* Стиль для метки */
+.auth-container label {
+  font-weight: bold;
+}
+
+.field__errors {
+  color: #e74c3c;           /* Красный цвет для ошибки */
+  font-size: 0.875rem;      /* Чуть меньше стандартного */
+  margin-top: 4px;
+  display: block;
+  font-weight: 500;
+  visibility: hidden;       /* Ошибка скрыта по умолчанию */
+  transition: all 0.2s ease;
+}
+
+.field__errors {
+  visibility: visible !important;
+}
+
+
+
+.error-message {
+  color: red;
+  font-size: 0.875em;
+  margin-top: 5px;
+  visibility: hidden;
+}
+
+
+.messages {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.messages li {
+  position: relative;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  font-weight: 500;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.messages li.success {
+  background-color: #e9f9ee;
+  border-left: 5px solid #27ae60;
+  color: #2e7d32;
+}
+
+.messages li.error {
+  background-color: #fdecea;
+  border-left: 5px solid #e74c3c;
+  color: #c0392b;
+}
+
+.messages li::before {
+  content: "✔";
+  font-size: 16px;
+  color: inherit;
+}
+
+.messages li.error::before {
+  content: "⚠";
+}

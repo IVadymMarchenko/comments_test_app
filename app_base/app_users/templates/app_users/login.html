@@ -1,0 +1,46 @@
+
+<!-- Модалка логина -->
+<div id="loginModal" class="modal-overlay" onclick="outsideClick(event, 'loginModal')">
+    <div class="modal-container">
+        <span class="modal-close" onclick="closeModal('loginModal')">&times;</span>
+        <div class="modal-wrapper">
+            {% if messages %}
+            <ul class="messages" id="message-container">
+              {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                  {{ message }}
+                </li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+            <h1>Login</h1>
+            
+            <form action="" method="post" id="login-form" data-url="{% url 'user:login' %}" class="modal-form">
+                {% csrf_token %}
+                <input type="email" class="modal-input" name="email" placeholder="email" required />
+                
+                <input type="password" name="password" class="modal-input" placeholder="password" autocomplete="new-password"
+                    required />
+                    <div class="non-field-errors" style="color: red; margin-top: 10px;"></div>
+                <div class="recover"><a href="#">forgot password?</a></div>
+                <button class="modal-submit" type="submit">Sign In</button> <!- КЛАСС -->
+            </form>
+            <div class="modal-links">
+                Not a member? <a href="#" onclick="switchModal('loginModal', 'signupModal')">register now</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Сообщения исчезают через 4 секунд (4000 миллисекунд)
+    setTimeout(function() {
+      const messageContainer = document.getElementById('message-container');
+      if (messageContainer) {
+        messageContainer.style.transition = 'opacity 0.5s ease-out';
+        messageContainer.style.opacity = '0';
+        setTimeout(() => {
+          messageContainer.remove();  // Удаляем элемент из DOM
+        }, 500);  // Подождём, пока анимация завершится
+      }
+    }, 4000);
+  </script>

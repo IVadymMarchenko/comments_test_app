@@ -1,0 +1,68 @@
+@import url('https//fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.wrapper {
+    width: 330px;
+    padding: 2rem 1rem;
+    margin: 50px;
+    background-color: aliceblue;
+    border-radius: 40px;
+    text-align: center;
+    box-shadow: 0 20px 35px rgb(31, 44, 46);
+
+}
+
+h1 {
+    font-size: 2rem;
+    color: black;
+    margin-bottom: 1.2rem;
+}
+
+form input {
+    width: 92%;
+    outline: none;
+    border: 1px solid;
+    padding: 12px 20px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    background-color: rgb(201, 206, 210);
+}
+
+button {
+    font-size: 1rem;
+    margin-top: 1.8rem;
+    padding: 10px;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    width: 90%;
+    background-color: #3498db;
+    color: aliceblue;
+    cursor: pointer;
+}
+button:hover {
+    background: rgb(32, 79, 156) ;
+}
+
+input:focus {
+    border: 1px solid rgb(0, 98, 255);
+}
+
+.members {
+    font-size: 0.8rem;
+    margin-top: 1.4rem;
+    color: rgb(94, 94, 95);
+}
+.members a {
+    color: rgb(41, 75, 197);
+    font-size: 15px;
+}
+.recover {
+    text-align: center;
+    font-size: 15px;
+    margin: 0.3rem 1.4rem 0 0;
+}
+
+.recover a{
+    text-decoration: none;
+    color: rgb(94, 94, 95);
+}

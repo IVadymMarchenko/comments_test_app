@@ -1,0 +1,56 @@
+
+{% load static %}
+<!-- Модалка регистрации -->
+<div id="signupModal" class="modal-overlay" onclick="outsideClick(event, 'signupModal')">
+    <div class="modal-container">
+        <span class="modal-close" onclick="closeModal('signupModal')">&times;</span>
+        <div class="modal-wrapper">
+            <h1>Sign Up</h1>
+            <form action="{% url "user:registr" %}"  method="post" class="modal-form" enctype="multipart/form-data"  data-js-form>
+                {% csrf_token %}
+                <input type="text" for="username" id="name" name="username" class="modal-input" placeholder="username"
+                value="{% if form.username.value %}{{form.username.value}}{% endif %}" required/>
+                <span id="name_error" class="field__errors"></span>
+
+                <input type="email" for="email" id="email" class="modal-input" name="email" placeholder="email" required />
+                <span id="email_error" class="field__errors"></span>
+                <span class="field-error" id="email_error" style="color: red;"></span>
+
+                <input type="homepage" id="homepage" class="modal-input" name="homepage" placeholder="homepage"/>
+                <span id="homepage_error" class="field__errors" style="color: red; font-size: 0.8em; display: block;"></span>
+
+                <input type="password" for="password1" id="password" name='password1' class="modal-input" placeholder="password"
+                    autocomplete="new-password" required/>
+                <span id="password_error" class="field__errors"></span>
+
+                <input type="password" for="password2" id="confirm_password" name='password2' class="modal-input" placeholder="re-enter-password" required/>
+                <span id="confirm_password_error" class="field__errors"></span>
+
+                <!-- Поле для загрузки аватара -->
+                <div class="file-upload-wrapper">
+                    <span class="field__errors" id="avatar_error"></span>
+
+                    <label for="avatarInput" class="custom-file-upload">
+                        📎 Select avatar
+                    </label>
+                    <input type="file" id="avatarInput" name="avatar" accept="image/*"/>
+
+                    <div class="file-info">
+                        <span id="avatar-file-name" class="file-name">File not selected</span>
+                        <a id="remove-avatar-file" class="remove-file" style="display:none;" href="#">✖</a>
+                    </div>
+                </div>
+
+                <!-- Контейнер для предпросмотра изображения -->
+                <div id="previewContainerAvatar"></div>
+
+                <button class="modal-submit" type="submit">Sign Up</button>
+            </form>
+            <div class="modal-links">
+                Already a member? <a href="#" onclick="switchModal('signupModal', 'loginModal')">login here</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
