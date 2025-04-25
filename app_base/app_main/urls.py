@@ -8,5 +8,5 @@ app_name = 'main'
 
 
 urlpatterns = [
-     path("",  views.index, name="main"),   
+     path("",  views.CommentListView.as_view(), name="main"),   
 ]

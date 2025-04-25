@@ -39,8 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
 
+    "django_unicorn",
+
+
     'app_main',
     'app_users',
+    'app_comments',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +133,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # settings.py
 AUTH_USER_MODEL = 'app_users.CustomUser'  # Замените 'yourapp' на имя вашего приложения
 
+
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

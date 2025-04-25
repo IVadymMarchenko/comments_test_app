@@ -484,3 +484,31 @@ function getCookie(name) {
   }
   return cookieValue;
 }
+
+
+
+
+
+
+
+//модалка для ответа на коментарий!! Опцыонально
+document.addEventListener('DOMContentLoaded', function () {
+  const commentsContainer = document.getElementById('comments-container');
+
+  if (commentsContainer) {
+      commentsContainer.addEventListener('click', function (event) {
+          if (event.target && event.target.classList.contains('reply-btn')) {
+              const parentId = event.target.getAttribute('data-parent-id');
+              const modal = document.getElementById('replyModal');
+              modal.style.display = 'block';
+              document.getElementById('replyParentId').value = parentId;
+          }
+      });
+  }
+});
+
+
+
+
+
+

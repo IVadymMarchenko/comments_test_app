@@ -18,10 +18,19 @@ from argparse import Namespace
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
+from django.conf import settings
+from django.conf.urls.static import static
 from app_main import views
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('app_main.urls',namespace='main')),
-    path('user/',include('app_users.urls',namespace='user'))
-]
+    path('user/',include('app_users.urls',namespace='user')),
+    path('comments/',include('app_comments.urls',namespace='comment'))
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.BASE_DIR / 'static')
+

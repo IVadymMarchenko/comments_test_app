@@ -1,0 +1,49 @@
+<div class="comment-card">
+    <div class="comment-header">
+        <a href="{% if comment.user.avatar %}{{ comment.user.avatar.url }}{% endif %}" data-lightbox="models" data-title="Это аватар пользователя">
+            <img src="{% if comment.user.avatar %}{{ comment.user.avatar.url }}{% endif %}" alt="аватар" class="thumbnail">
+        </a>
+        <div class="comment-meta">{{ comment.user.username }} | <span>{{ comment.created_at|date:"d M Y" }}</span></div>
+    </div>
+    <div class="comment-text">{{ comment.text }}</div>
+    
+    {% if comment.image %}
+        <div class="comment-image">
+            <a href="{{ comment.image.url }}" data-lightbox="models" data-title="Это изображение в комментарии">
+                <img src="{{ comment.image.url }}" alt="Изображение в комментарии" class="comment-img">
+            </a>
+        </div>
+    {% endif %}
+
+    <div class="comment-actions">
+        <button class="reply-btn" data-parent-id="{{ comment.id }}">Reply</button>
+        <button onclick="toggleReplies(this)">Show answers</button>
+        <button onclick="">Delete</button>
+    </div>
+
+    <div class="replies" style="display: none;">
+        {% for reply in comment.replies.all %}
+            <div class="comment-card">
+                <div class="comment-header">
+                    <a href="{% if reply.user.avatar %}{{ reply.user.avatar.url }}{% endif %}" data-lightbox="models" data-title="Это аватар пользователя">
+                        <img src="{% if reply.user.avatar %}{{ reply.user.avatar.url }}{% endif %}" alt="аватар" class="thumbnail">
+                    </a>
+                    <div class="comment-meta">{{ reply.user.username }} | <span>{{ reply.created_at|date:"d M Y" }}</span></div>
+                </div>
+                <blockquote class="reply-to-comment">{{ reply.parent.text }}</blockquote>
+                <div class="comment-text">{{ reply.text }}</div>
+                {% if reply.image %}
+                    <div class="comment-image">
+                        <a href="{{ reply.image.url }}" data-lightbox="models" data-title="Это изображение в ответе">
+                            <img src="{{ reply.image.url }}" alt="Изображение в ответе" class="comment-img">
+                        </a>
+                    </div>
+                {% endif %}
+                <div class="comment-actions">
+                    <button class="reply-btn" data-parent-id="{{ reply.id }}">Reply</button>
+                    <button onclick="">Delete</button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

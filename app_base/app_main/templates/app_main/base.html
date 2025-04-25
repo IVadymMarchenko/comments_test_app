@@ -49,234 +49,8 @@
         </div>
 
         <!-- Начало первого комментария -->
-        <div class="comment-card">
-            <div class="comment-header">
-                <a href="img/menya.webp" data-lightbox="models" data-title="Это аватар пользователя">
-                    <img src="/img/menya.webp" alt="аватар" class="thumbnail">
-                </a>
-                <!-- Аватар пользователя -->
-                <div class="comment-meta">Иван | <span>10 апр 2025</span></div> <!-- Данные о пользователе и дате -->
-            </div>
-            <div class="comment-text">Очень интересная статья! Мне особенно понравился раздел про анализ данных.</div>
-
-            <div class="comment-image">
-                <a href="img/Закат.png" data-lightbox="models" data-title="Это изображение в комментарии">
-                    <img src="img/Закат.png" alt="Изображение в комментарии" class="comment-img">
-                </a>
-            </div>
-
-            <div class="comment-actions">
-                <button onclick="openReplyModal()">Reply</button> <!-- Кнопка ответа -->
-                <button onclick="toggleReplies(this)">Show answers</button> <!-- Кнопка показа/скрытия ответов -->
-                <button onclick="openReplyModal()">Delete</button>
-            </div>
-
-            <!-- Ответы на комментарий -->
-            <div class="replies" style="display: none;">
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <a href="img/menya.jpeg" data-lightbox="models" data-title="Это аватар пользователя">
-                            <img src="img/menya.webp" alt="аватар" class="thumbnail">
-                        </a>
-
-                        <div class="comment-meta">Анна | <span>11 апр 2025</span></div>
-                    </div>
-                    <blockquote class="reply-to-comment">Комментарий, на который отвечают:</blockquote>
-                    <div class="comment-text">Согласна, тоже нашла много полезного!</div>
-                    <div class="comment-actions">
-                        <button onclick="openReplyModal()">Reply</button>
-                        <button onclick="toggleReplies(this)">Show answers</button>
-                        <button onclick="">Delete</button> <!-- Кнопка удаления комментария -->
-                        <!-- Кнопка показа/скрытия ответов -->
-                    </div>
-                    <!-- Ответ на ответ -->
-                    <div class="replies" style="display: none;">
-                        <div class="comment-card">
-                            <div class="comment-header">
-                                <a href="img/menya.webp" data-lightbox="models" data-title="Это аватар пользователя">
-                                    <img src="img/menya.webp" alt="аватар" class="thumbnail">
-                                </a>
-
-                                <div class="comment-meta">Сергей | <span>12 апр 2025</span></div>
-                            </div>
-                            <blockquote class="reply-to-comment">Комментарий, на который отвечают:</blockquote>
-                            <div class="comment-text">Именно! Ещё бы побольше кода!</div>
-                            <div class="comment-actions">
-                                <button onclick="openReplyModal(this)">Reply</button>
-                                <button onclick="toggleReplies(this)">Show answers</button>
-                                <button onclick="">Delete</button> <!-- Кнопка удаления комментария -->
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Другие ответы на комментарий -->
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <a href="img/menya.webp" data-lightbox="models" data-title="Это аватар пользователя">
-                            <img src="img/menya.webp" alt="аватар" class="thumbnail">
-                        </a>
-
-                        <div class="comment-meta">Сергей | <span>11 апр 2025</span></div>
-                    </div>
-                    <blockquote class="reply-to-comment">Комментарий, на который отвечают:</blockquote>
-                    <div class="comment-text">А мне показалось, что можно было больше примеров добавить.</div>
-                    <div class="comment-actions">
-                        <button onclick="openReplyModal()">reply</button>
-                        <button onclick="toggleReplies(this)">Show answers</button>
-                        <button onclick="openReplyModal()">delete</button>
-                        <!-- Кнопка показа/скрытия ответов -->
-                    </div>
-                </div>
-
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <a href="img/menya.webp" data-lightbox="models" data-title="Это аватар пользователя">
-                            <img src="img/menya.webp" alt="аватар" class="thumbnail">
-                        </a>
-
-                        <div class="comment-meta">Мария | <span>12 апр 2025</span></div>
-                    </div>
-                    <div class="comment-text">В любом случае — написано хорошо!</div>
-                    <div class="comment-actions">
-                        <button onclick="openReplyModal()">reply</button>
-                        <button onclick="toggleReplies(this)">Show answers</button>
-                        <button onclick="">delete</button> <!-- Кнопка удаления комментария -->
-                        <!-- Кнопка показа/скрытия ответов -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Конец первого комментария -->
-
-        <!-- Начало второго комментария -->
-        <div class="comment-card">
-            <div class="comment-header">
-                <a href="img/menya.webp" data-lightbox="models" data-title="Это аватар пользователя">
-                    <img src="img/menya.webp" alt="аватар" class="thumbnail">
-                </a>
-
-                <div class="comment-meta">Олег | <span>9 апр 2025</span></div>
-            </div>
-            <div class="comment-text">Спасибо за разъяснение, давно искал информацию по этой теме!</div>
-            <div class="comment-actions">
-                <button onclick="openReplyModal()">reply</button>
-                <button onclick="toggleReplies(this)">Show answers</button>
-                <button onclick="">delete</button> <!-- Кнопка удаления комментария -->
-
-            </div>
-
-            <!-- Ответы на комментарий -->
-            <div class="replies" style="display: none;">
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <a href="img/menya.webp" data-lightbox="models" data-title="Это аватар пользователя">
-                            <img src="img/menya.webp" alt="аватар" class="thumbnail">
-                        </a>
-
-                        <div class="comment-meta">Дмитрий | <span>10 апр 2025</span></div>
-                    </div>
-                    <div class="comment-text">Олег, рад, что ты нашёл полезное. 👍</div>
-                    <div class="comment-actions">
-                        <button onclick="openReplyModal()">reply</button>
-                        <button onclick="toggleReplies(this)">Show answers</button>
-                        <button onclick="">delete</button> <!-- Кнопка удаления комментария -->
-                        <!-- Кнопка показа/скрытия ответов -->
-                    </div>
-                </div>
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <a href="img/menya.webp" data-lightbox="models" data-title="Это аватар пользователя">
-                            <img src="img/menya.webp" alt="аватар" class="thumbnail">
-                        </a>
-
-                        <div class="comment-meta">Катя | <span>10 апр 2025</span></div>
-                    </div>
-                    <div class="comment-text">Я тоже многое поняла, впервые разобралась!</div>
-                    <div class="comment-actions">
-                        <button onclick="openReplyModal()">reply</button>
-                        <button onclick="toggleReplies(this)">Show answers</button>
-                        <button onclick="">delete</button> <!-- Кнопка удаления комментария -->
-                        <!-- Кнопка показа/скрытия ответов -->
-                    </div>
-                </div>
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <a href="img/menya.webp" data-lightbox="models" data-title="Это аватар пользователя">
-                            <img src="img/menya.webp" alt="аватар" class="thumbnail">
-                        </a>
-
-                        <div class="comment-meta">Виктор | <span>10 апр 2025</span></div>
-                    </div>
-                    <div class="comment-text">Это реально работает, проверил у себя!</div>
-                </div>
-            </div>
-        </div>
-        <!-- Конец второго комментария -->
-
-        <!-- Начало третьего комментария -->
-        <div class="comment-card">
-            <div class="comment-header">
-                <img src="img/user6.jpg" alt="аватар">
-                <div class="comment-meta">Лена | <span>8 апр 2025</span></div>
-            </div>
-            <div class="comment-text">Можно ли получить шаблон в pdf? Хочу изучить подробнее.</div>
-            <div class="comment-actions">
-                <button onclick="openReplyModal()">reply</button>
-                <button onclick="toggleReplies(this)">Show answers</button>
-                <button onclick="">delete</button> <!-- Кнопка удаления комментария -->
-            </div>
-
-            <!-- Ответы на комментарий -->
-            <div class="replies" style="display: none;">
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <a href="img/menya.webp" data-lightbox="models" data-title="Это аватар пользователя">
-                            <img src="img/menya.webp" alt="аватар" class="thumbnail">
-                        </a>
-
-                        <div class="comment-meta">Николай | <span>9 апр 2025</span></div>
-                    </div>
-                    <div class="comment-text">Присоединяюсь к вопросу!</div>
-                    <div class="comment-actions">
-                        <button onclick="openReplyModal()">reply</button>
-                        <button onclick="toggleReplies(this)">Show answers</button>
-                        <button onclick="">delete</button> <!-- Кнопка удаления комментария -->
-
-                    </div>
-                </div>
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <a href="img/menya.webp" data-lightbox="models" data-title="Это аватар пользователя">
-                            <img src="img/menya.webp" alt="аватар" class="thumbnail">
-                        </a>
-
-                        <div class="comment-meta">Ольга | <span>9 апр 2025</span></div>
-                    </div>
-                    <div class="comment-text">Можно, я уже скачала — очень удобно!</div>
-                    <div class="comment-actions">
-                        <button onclick="openReplyModal()">reply</button>
-                        <button onclick="toggleReplies(this)">Show answers</button>
-                        <button onclick="openReplyModal()">delete</button>
-                    </div>
-                </div>
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <a href="img/menya.webp" data-lightbox="models" data-title="Это аватар пользователя">
-                            <img src="img/menya.webp" alt="аватар" class="thumbnail">
-                        </a>
-
-                        <div class="comment-meta">Александр | <span>9 апр 2025</span></div>
-                    </div>
-                    <div class="comment-text">Тоже бы хотел получить — кто может поделиться?</div>
-                    <div class="comment-actions">
-                        <button onclick="openReplyModal()">reply</button>
-                        <button onclick="toggleReplies(this)">Show answers</button>
-                        <button onclick="openReplyModal()">delete</button>
-                    </div>
-                </div>
-            </div>
+        <div id="comments-container">
+            {% include "app_comments/comments.html" %}
         </div>
         <!-- Конец третьего комментария -->
 
@@ -287,65 +61,19 @@
     </div>
 
     <!-- Модальное окно для добавления комментария -->
-    <div id="commentModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="this.parentElement.parentElement.style.display='none'">&times;</span>
-            <h2>Add a comment</h2>
-            <form id="commentForm" method="post" enctype="multipart/form-data">
-                <textarea rows="4" placeholder="Your comment..." name="comment" required></textarea>
-
-                <div class="file-upload-wrapper">
-                    <div id="comment_file_error" class="error-message"></div>
-
-                    <label for="fileInput" class="custom-file-upload">
-                        📎Select file
-                    </label>
-                    <input type="file" id="fileInput" name="file" accept=".jpg,.jpeg,.png,.gif,.txt">
-
-                    <div class="file-info">
-                        <span id="file-name" class="file-name">File not selected</span>
-                        <a type="" id="remove-file" class="remove-file" style="display:none;">✖</a>
-                    </div>
-                </div>
-
-                <div id="previewContainer"></div>
-                <button type="submit">Send</button>
-            </form>
-        </div>
-    </div>
+    {% include "app_comments/add_comment.html" %}
 
     <!-- Модальное окно для ответа на комментарий -->
-    <div id="replyModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="this.parentElement.parentElement.style.display='none'">&times;</span>
-            <h2>Reply to comment</h2>
-            <form id="replyForm" method="post" enctype="multipart/form-data">
-                <textarea rows="4" placeholder="your answer..." name="reply"  minlength="2"></textarea>
+    {% include "app_comments/form_reply.html" %}
 
-                <div class="file-upload-wrapper">
-                    <div id="reply_file_error" class="error-message"></div>
-
-                    <label for="replyFileInput" class="custom-file-upload">
-                        📎Select file
-                    </label>
-                    <input type="file" id="replyFileInput" name="file" accept=".jpg,.jpeg,.png,.gif,.txt">
-
-                    <div class="file-info">
-                        <span id="reply-file-name" class="file-name">File not selected</span>
-                        <a id="remove-reply-file" class="remove-file" style="display:none;">✖</a>
-                    </div>
-                </div>
-                <div id="previewContainerReply"></div>
-                <button type="submit">Send reply</button>
-            </form>
-        </div>
-    </div>
 
     <!-- Модалка логина -->
     {% include "app_users/login.html" %}
 
+
      <!-- Модалка регистрации -->
     {% include "app_users/registr_form.html" %} 
+
 
     {% if not request.user.is_authenticated %}
     <script>
@@ -356,11 +84,11 @@
     {% endif %}
 
     <!-- Подключение JavaScript -->
-    <script src="{% static 'app_main/base.js' %}"></script>
+    <script src="{% static 'app_main/add_comments.js' %}"></script>
     <script src="{% static "app_main/lightbox-plus-jquery.js" %}"></script>
     <script src="{% static 'app_main/auth.js' %}"></script>
-
-
+    <script src="{% static 'app_main/base.js' %}"></script>
+   
 </body>
 
 </html>

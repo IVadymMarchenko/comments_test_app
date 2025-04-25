@@ -1,0 +1,29 @@
+<div id="commentModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="this.parentElement.parentElement.style.display='none'">&times;</span>
+        <h2>Add a comment</h2>
+        <div id="formErrors" style="color: red;"></div>
+        <form id="commentForm" action="{% url "comment:add_comment" %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <textarea rows="4" placeholder="Your comment..." name="text" required></textarea>
+        
+            <div class="file-upload-wrapper">
+                <div id="comment_file_error" class="error-message"></div>
+        
+                <label for="fileInput" class="custom-file-upload">
+                    📎Select file
+                </label>
+                <input type="file" id="fileInput" name="image" accept=".jpg,.jpeg,.png,.gif,.txt">
+        
+                <div class="file-info">
+                    <span id="file-name" class="file-name">File not selected</span>
+                    <a type="" id="remove-file" class="remove-file" style="display:none;">✖</a>
+                </div>
+            </div>
+        
+            <div id="previewContainer"></div>
+            <button type="submit">Send</button>
+        </form>
+        
+    </div>
+</div>
