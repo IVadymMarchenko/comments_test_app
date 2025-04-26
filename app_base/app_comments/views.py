@@ -1,18 +1,15 @@
 import json
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from .forms import CommentForm
 from .models import Comment
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, get_object_or_404
-
-
-
-
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from .forms import CommentForm
 from .models import Comment
+
+
+
 
 def add(request):
     form = CommentForm()
@@ -43,15 +40,28 @@ def add(request):
 
 def add_reply(request):
     if request.method == 'POST':
-        parent_id = request.POST.get('parent_id')
-        text = request.POST.get('text')
-        image = request.FILES.get('file')  # если прикреплён файл
-        parent_comment = get_object_or_404(Comment, id=parent_id)
+        form = CommentForm(request.POST, request.FILES)
+        if form.is_valid():
+            parent_id = request.POST.get('parent_id')
+            try:
+                parent_comment = Comment.objects.get(id=parent_id)
+            except Comment.DoesNotExist:
+                return JsonResponse({"success": False, "errors": {"parent": ["Родительский комментарий не найден."]}})
 
-        Comment.objects.create(
-            user=request.user,
-            text=text,
-            parent=parent_comment,
-            image=image if image else None
-        )
-    return redirect(request.META.get('HTTP_REFERER', '/'))
+            reply = form.save(commit=False)
+            reply.user = request.user
+            reply.parent_id = parent_id
+            reply.save()
+
+            # Отримуємо текст БЕЗПОСЕРЕДНЬОГО батьківського коментаря
+            parent_text = parent_comment.text
+
+            # Рендерим HTML только что добавленного ответа
+            html = render_to_string("app_comments/single_comment.html", {"comment": reply})
+            return JsonResponse({"success": True, "html": html, "parent_id": parent_id, "parent_text": parent_text})
+        else:
+            errors_dict = {}
+            for field, error_list in form.errors.items():
+                errors_dict[field] = [str(e) for e in error_list]
+            return JsonResponse({"success": False, "errors": errors_dict})
+    return JsonResponse({"success": False, "errors": ["Недопустимый метод запроса."]})

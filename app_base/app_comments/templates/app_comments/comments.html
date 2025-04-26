@@ -5,7 +5,7 @@
 {% for comment in comments %}
     {% if comment.parent is None %}
     
-        <div class="comment-card">
+        <div class="comment-card" data-comment-id="{{ comment.id }}">
             
             <div class="comment-header">
                 <!-- Проверка, есть ли изображение у комментария -->
@@ -44,13 +44,14 @@
                         <blockquote class="reply-to-comment">{{ reply.parent.text }}</blockquote>
                         <div class="comment-text">{{ reply.text }}</div>
                         {% if reply.image %}
-    <div class="comment-image">
-        <a href="{{ reply.image.url }}" data-lightbox="models" data-title="Это изображение в ответе">
-            <img src="{{ reply.image.url }}" alt="Изображение в ответе" class="comment-img">
-        </a>
-    </div>
-{% endif %}
+                        <div class="comment-image">
+                            <a href="{{ reply.image.url }}" data-lightbox="models" data-title="Это изображение в комментарии">
+                                <img src="{{ reply.image.url }}" alt="Изображение в комментарии" class="comment-img">
+                            </a>
+                        </div>
+                    {% endif %}
                         <div class="comment-actions">
+                            <button onclick="toggleReplies(this)">Show answers</button> <!-- Кнопка показа/скрытия ответов -->
                             <button class="reply-btn " data-parent-id="{{ comment.id }}">Reply</button> <!-- Кнопка ответа -->
                             <button onclick="">Delete</button>
                         </div>

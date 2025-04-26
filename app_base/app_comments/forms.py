@@ -21,7 +21,7 @@ class CommentForm(forms.ModelForm):
             if image.name.endswith(('.jpg', '.jpeg', '.png', '.gif')):
                 limit = 3 * 1024 * 1024  # 3 MB in bytes для изображений
                 if file_size > limit:
-                    raise ValidationError("The image size must not exceed 3 MB.")
+                    raise ValidationError("The image size must not exceed 3 MB!!!.")
             elif image.name.endswith('.txt'):
                 limit = 100 * 1024  # 100 KB in bytes для текстовых файлов
                 if file_size > limit:

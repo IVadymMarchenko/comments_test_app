@@ -1,4 +1,4 @@
-<div class="comment-card">
+<div class="comment-card" data-comment-id="{{ comment.id }}">
     <div class="comment-header">
         <a href="{% if comment.user.avatar %}{{ comment.user.avatar.url }}{% endif %}" data-lightbox="models" data-title="Это аватар пользователя">
             <img src="{% if comment.user.avatar %}{{ comment.user.avatar.url }}{% endif %}" alt="аватар" class="thumbnail">
