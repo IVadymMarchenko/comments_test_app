@@ -511,4 +511,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+// HTMX автоматически загрузит первую порцию ответов и кнопку "Load more"
+document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('click', function(event) {
+      if (event.target.classList.contains('show-replies-btn')) {
+          const commentId = event.target.dataset.commentId;
+          const repliesContainer = document.getElementById(`replies-container-${commentId}`);
+          const button = event.target;
+
+          if (repliesContainer.style.display === 'none') {
+              repliesContainer.style.display = 'block';
+              button.textContent = 'Hide replies';
+
+              repliesContainer.addEventListener('htmx:afterSwap', function afterSwapHandler(event) {
+                  const loadMoreContainer = repliesContainer.querySelector('.load-more-container');
+                  if (loadMoreContainer) {
+                      loadMoreContainer.addEventListener('htmx:beforeRequest', function(evt) {
+                          evt.target.remove(); // Удаляем кнопку "Load more" перед запросом
+                      });
+                  }
+                  repliesContainer.removeEventListener('htmx:afterSwap', afterSwapHandler); // Очищаем обработчик
+              });
+          } else {
+              repliesContainer.style.display = 'none';
+              button.textContent = 'Show replies';
+          }
+      }
+  });
+});
 

@@ -3,24 +3,26 @@
         <span class="close" onclick="this.parentElement.parentElement.style.display='none'">&times;</span>
         <h2>Reply to comment</h2>
         <form id="replyForm" action="{% url "comment:reply_comment" %}" method="post" enctype="multipart/form-data">
+            <div id="reply_file_error" class="error-message"></div>
             {%csrf_token%}
-            <textarea rows="4" placeholder="your answer..." name="text"  minlength="2"></textarea>
-            <input type="hidden" name="parent_id" id="replyParentId"> 
-
+            <textarea rows="4" placeholder="your answer..." name="text" id="replyText" minlength="2" onkeyup="previewReply()"></textarea>
+            <input type="hidden" name="parent_id" id="replyParentId">
+            <div class="editor-buttons">
+                <button type="button" class="editor-button" onclick="insertTag('[i]', '[/i]', 'replyText')">[i]</button>
+                <button type="button" class="editor-button" onclick="insertTag('[strong]', '[/strong]', 'replyText')">[strong]</button>
+                <button type="button" class="editor-button" onclick="insertTag('[code]', '[/code]', 'replyText')">[code]</button>
+            </div>
             <div class="file-upload-wrapper">
-                <div id="reply_file_error" class="error-message"></div>
-
                 <label for="replyFileInput" class="custom-file-upload">
                     📎Select file
                 </label>
                 <input type="file" id="replyFileInput" name="image" accept=".jpg,.jpeg,.png,.gif,.txt">
-
                 <div class="file-info">
                     <span id="reply-file-name" class="file-name">File not selected</span>
                     <a id="remove-reply-file" class="remove-file" style="display:none;">✖</a>
                 </div>
             </div>
-            <div id="previewContainerReply"></div>
+           
             <button type="submit">Send reply</button>
         </form>
     </div>

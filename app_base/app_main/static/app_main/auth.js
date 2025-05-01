@@ -27,13 +27,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // Если это .txt, то проверяем на 100KB
     if (extension === "txt") {
       if (sizeKB > 100) {
-        displayError(errorFieldId, `TXT-файл слишком большой (${Math.round(sizeKB)}KB). Максимум 100KB.`);
+        displayError(errorFieldId, `TXT file is too large: (${Math.round(sizeKB)}KB). Maximum: 100KB.`);
         return false;
       }
     } else {
       // Для остальных — проверка на размер в MB
       if (sizeKB > maxSizeMB * 1024) {
-        displayError(errorFieldId, `Файл слишком большой (${(sizeKB / 1024).toFixed(2)}MB). Максимум: ${maxSizeMB}MB.`);
+        displayError(errorFieldId, `File too big (${(sizeKB / 1024).toFixed(2)}MB).Maximum: ${maxSizeMB}MB.`);
         return false;
       }
     }
@@ -114,8 +114,8 @@ document.addEventListener("DOMContentLoaded", () => {
       displayError("password", "Password is required.");
       return false;
     }
-    if (password.length < 4) {
-      displayError("password", "Password must be at least 4 characters.");
+    if (password.length < 8) {
+      displayError("password", "Password must be at least 8 characters.");
       return false;
     }
     displayError("password", "");

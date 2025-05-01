@@ -5,25 +5,37 @@
         <div id="formErrors" style="color: red;"></div>
         <form id="commentForm" action="{% url "comment:add_comment" %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <textarea rows="4" placeholder="Your comment..." name="text" required></textarea>
-        
+
+            <div class="comment-editor">
+                
+                <textarea rows="4" placeholder="Your comment..." name="text" id="commentText" required onkeyup="previewComment()"></textarea>
+            </div>
+            <div class="editor-buttons">
+                <button type="button" class="editor-button" onclick="insertTag('[i]', '[/i]', 'commentText')">[i]</button>
+                <button type="button" class="editor-button" onclick="insertTag('[strong]', '[/strong]', 'commentText')">[strong]</button>
+                <button type="button" class="editor-button" onclick="insertTag('[code]', '[/code]', 'commentText')">[code]</button>
+            </div>
+            <div class="comment-preview">
+                <h3>Preview:</h3>
+                <div id="commentPreviewContent"></div>
+            </div>
+
             <div class="file-upload-wrapper">
                 <div id="comment_file_error" class="error-message"></div>
-        
+
                 <label for="fileInput" class="custom-file-upload">
                     📎Select file
                 </label>
                 <input type="file" id="fileInput" name="image" accept=".jpg,.jpeg,.png,.gif,.txt">
-        
+
                 <div class="file-info">
                     <span id="file-name" class="file-name">File not selected</span>
                     <a type="" id="remove-file" class="remove-file" style="display:none;">✖</a>
                 </div>
             </div>
-        
             <div id="previewContainer"></div>
             <button type="submit">Send</button>
         </form>
-        
+
     </div>
 </div>

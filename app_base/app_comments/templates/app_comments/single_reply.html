@@ -1,0 +1,41 @@
+<div class="comment-card" data-comment-id="{{ comment.id }}">
+    <div class="comment-header">
+        <a href="{% if comment.user.avatar %}{{ comment.user.avatar.url }}{% else %}/media/avatars/avatar.png{% endif %}" data-lightbox="models" data-title="Это аватар пользователя">
+            <img src="{% if comment.user.avatar %}{{ comment.user.avatar.url }}{% else %}/media/avatars/avatar.png{% endif %}" alt="аватар" class="thumbnail">
+        </a>
+        <div class="comment-meta">{{ comment.user.username }} | <span>{{ comment.created_at|date:"d M Y" }}</span></div>
+    </div>
+
+    {% if comment.parent %}
+        <blockquote class="reply-to-comment">{{ comment.parent.text|safe }}</blockquote>
+    {% endif %}
+
+    <div class="comment-text">{{ comment.text|safe }}</div>
+
+    {% if comment.image %}
+        <div class="comment-image">
+            <a href="{{ comment.image.url }}" data-lightbox="models" data-title="Это изображение в ответе">
+                <img src="{{ comment.image.url }}" alt="Изображение в ответе" class="comment-img">
+            </a>
+        </div>
+    {% endif %}
+
+    <div class="comment-actions">
+        <button class="reply-btn" data-parent-id="{{ comment.id }}">Reply</button>
+        {% if comment.replies.exists %}
+            <button
+                hx-get="{% url 'comment:load_replies' comment_id=comment.id %}?page=1&initial_load=true"
+                hx-target="#replies-container-{{ comment.id }}"
+                hx-swap="innerHTML"
+                class=""
+                onclick="toggleReplies(this)">
+                Show answers ({{ comment.replies.count }})
+            </button>
+        {% endif %}
+        {% if request.user == comment.user %}
+            <button onclick="">Delete</button>
+        {% endif %}
+    </div>
+
+    <div class="replies" id="replies-container-{{ comment.id }}" style="display: none;"></div>
+</div>

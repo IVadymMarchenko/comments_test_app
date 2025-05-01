@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Обработка открытия модального окна для ответа
     document.querySelectorAll('.reply-btn').forEach(btn => {
         btn.addEventListener('click', function () {
             const parentId = this.getAttribute('data-parent-id');
@@ -7,83 +8,82 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('replyParentId').value = parentId;
         });
     });
-});
 
-document.addEventListener("DOMContentLoaded", function () {
     const replyForm = document.getElementById("replyForm");
     const replyModal = document.getElementById("replyModal");
     const formErrorsReply = document.getElementById("reply_file_error");
 
     if (replyForm) {
         replyForm.addEventListener("submit", function (e) {
-            console.log('Submit event triggered for replyForm');
-            handleReplyFormSubmit(e, replyForm, formErrorsReply, replyModal, (data) => {
-                console.log('Data received:', data);
-                const newReply = document.createElement("div");
-                newReply.innerHTML = data.html;
+            e.preventDefault();
+            const formData = new FormData(replyForm);
 
-                // Добавляем текст БЕЗПОСЕРЕДНЬОГО родительского комментария
-                const replyToCommentBlock = document.createElement('blockquote');
-                replyToCommentBlock.classList.add('reply-to-comment');
-                replyToCommentBlock.textContent = data.parent_text;
-                newReply.querySelector('.comment-text').insertAdjacentElement('beforebegin', replyToCommentBlock);
-
-                const parentCommentCard = document.querySelector(`.comment-card[data-comment-id="${data.parent_id}"]`);
-                if (parentCommentCard) {
-                    const repliesContainer = parentCommentCard.querySelector('.replies');
-                    if (repliesContainer) {
-                        repliesContainer.prepend(newReply);
-                        repliesContainer.style.display = 'block';
-                    } else {
-                        console.error('Container .replies not found in the parent comment card.');
-                    }
-                } else {
-                    console.error('Parent comment card not found.');
+            fetch(replyForm.action, {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
                 }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Reply server response:', data);
+                if (data.success) {
+                    const newReply = document.createElement("div");
+                    newReply.innerHTML = data.html;
+
+                    // Добавляем текст "Вы отвечаете на"
+                    const replyToCommentBlock = document.createElement('blockquote');
+                    replyToCommentBlock.classList.add('reply-to-comment');
+                    replyToCommentBlock.textContent = data.parent_text;
+                    newReply.querySelector('.comment-text').insertAdjacentElement('beforebegin', replyToCommentBlock);
+
+                    // Найдем контейнер родительского комментария
+                    const parentCommentCard = document.querySelector(`.comment-card[data-comment-id="${data.parent_id}"]`);
+                    if (parentCommentCard) {
+                        const repliesContainer = parentCommentCard.querySelector(`#replies-container-${data.parent_id}`);
+                        if (repliesContainer) {
+                            repliesContainer.style.display = 'block';
+
+                            // Если контейнер для списка ответов еще не существует — создаем
+                            let repliesListInner = repliesContainer.querySelector(`#replies-list-inner-${data.parent_id}`);
+                            if (!repliesListInner) {
+                                repliesListInner = document.createElement("div");
+                                repliesListInner.id = `replies-list-inner-${data.parent_id}`;
+                                repliesContainer.appendChild(repliesListInner);
+                            }
+
+                            repliesListInner.prepend(newReply);
+                        } else {
+                            console.error(`Replies container not found for parent ID ${data.parent_id}`);
+                        }
+                    } else {
+                        console.error(`Parent comment card not found for ID ${data.parent_id}`);
+                    }
+
+                    replyForm.reset();
+                    replyModal.style.display = "none";
+                    formErrorsReply.innerHTML = "";
+                } else {
+                    // Показываем ошибки валидации
+                    if (data.errors) {
+                        let html = "";
+                        const errors = typeof data.errors === 'string' ? JSON.parse(data.errors) : data.errors;
+                        for (const field in errors) {
+                            html += `<p>${errors[field].join("<br>")}</p>`;
+                        }
+                        formErrorsReply.innerHTML = html;
+                    } else {
+                        formErrorsReply.innerHTML = "<p>Произошла ошибка при отправке ответа.</p>";
+                    }
+                }
+            })
+            .catch(error => {
+                console.error("Reply fetch error:", error);
+                formErrorsReply.innerHTML = `<p>Ошибка соединения: ${error}</p>`;
             });
         });
     } else {
-        console.error('Element replyForm not found.');
-    }
-
-    // Функция для обработки отправки формы ответа
-    function handleReplyFormSubmit(event, formElement, errorContainerElement, modalElement, successCallback) {
-        event.preventDefault();
-        const formData = new FormData(formElement);
-
-        fetch(formElement.action, {
-            method: "POST",
-            body: formData,
-            headers: {
-                "X-Requested-With": "XMLHttpRequest",
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Reply server response:', data);
-            if (data.success) {
-                successCallback(data);
-                formElement.reset();
-                if (modalElement) {
-                    modalElement.style.display = "none";
-                }
-                errorContainerElement.innerHTML = "";
-            } else {
-                if (data.errors) {
-                    let html = "";
-                    const errors = typeof data.errors === 'string' ? JSON.parse(data.errors) : data.errors;
-                    for (const field in errors) {
-                        html += `<p>${errors[field].join("<br>")}</p>`;
-                    }
-                    errorContainerElement.innerHTML = html;
-                } else {
-                    errorContainerElement.innerHTML = "<p>An error occurred during reply submission.</p>";
-                }
-            }
-        })
-        .catch(error => {
-            console.error("Reply fetch error:", error);
-            errorContainerElement.innerHTML = `<p>Connection error during reply: ${error}</p>`;
-        });
+        console.error('Форма ответа не найдена.');
     }
 });

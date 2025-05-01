@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const errorContainer = document.getElementById("formErrors");
 
     form.addEventListener("submit", function (e) {
-        e.preventDefault(); // Отключаем обычную отправку формы
+        e.preventDefault(); 
 
         const formData = new FormData(form);
 
@@ -17,9 +17,9 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data); // Добавлено для отладки, чтобы видеть, что приходит с сервера
+            console.log(data); 
             if (data.success) {
-                // Добавляем новый комментарий в начало списка
+                
                 const newComment = document.createElement("div");
                 newComment.innerHTML = data.html;
                 document.getElementById("comments-container").prepend(newComment);
@@ -42,13 +42,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                     errorContainer.innerHTML = html;
                 } else {
-                    errorContainer.innerHTML = "<p>Произошла ошибка при отправке</p>";
+                    errorContainer.innerHTML = "<p>There was an error sending</p>";
                 }
             }
         })
         .catch(error => {
             console.error("Ошибка:", error);
-            errorContainer.innerHTML = "<p>Ошибка соединения</p>";
+            errorContainer.innerHTML = "<p>To post comments you need to register or log in</p>";
         });
     });
 });

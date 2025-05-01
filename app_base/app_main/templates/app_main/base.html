@@ -25,6 +25,7 @@
 </head>
 
 <body>
+    <button class="add-comment-btn" onclick="document.getElementById('commentModal').style.display='block'">Add Comment</button>
     <!-- Кнопка для открытия модального окна регистрации -->
     <!-- Контейнер для всех элементов -->
     <div class="container">
@@ -32,31 +33,57 @@
 
         <!-- Заголовок раздела комментариев -->
         <h2>Comments</h2>
-
-        <button class="modal-btn" onclick="openModal('loginModal')">Войти</button>
-        <button class="modal-btn" onclick="openModal('signupModal')">Зарегистрироваться</button>
+        <div class="comment-actions">
+        {% if not user.is_authenticated %}
+        <button class="modal-btn" onclick="openModal('loginModal')">Login</button>
+        <button class="modal-btn" onclick="openModal('signupModal')">Registration</button>
+        {%else%}
+        <form method="post" action="{% url 'user:logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+        {% endif %}
+        </div>
 
         <!-- Панель сортировки -->
         <div class="sort-container">
-            <label for="sortBy">Sort by:</label>
-            <select id="sortBy">
-                <option value="userName">User Name</option>
-                <option value="email">E-mail</option>
-                <option value="dateAdded">Date Added</option>
-            </select>
-            <button id="sortAscBtn">Sort Ascending</button>
-            <button id="sortDescBtn">Sort Descending</button>
+            <form method="get">
+                <label for="sort_by">Order by:</label>
+                <select name="sort_by" id="sort_by" onchange="this.form.submit()">
+                    <option value="-dateAdded" {% if sort_by == "-dateAdded" %}selected{% endif %}>Date Added (newest)</option>
+                    <option value="dateAdded" {% if sort_by == "dateAdded" %}selected{% endif %}>Date Added (oldest)</option>
+                    <option value="userName" {% if sort_by == "userName" %}selected{% endif %}>User Name</option>
+                    <option value="email" {% if sort_by == "email" %}selected{% endif %}>E-mail</option>
+                </select>
+            </form>
+            
         </div>
 
         <!-- Начало первого комментария -->
-        <div id="comments-container">
-            {% include "app_comments/comments.html" %}
+       
+            <div id="comments-container">
+                {% include "app_comments/comments.html" %}
+            </div>
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if comments.has_previous %}
+                    <a href="?page=1{% if request.GET.sort_by %}&sort_by={{ request.GET.sort_by }}{% endif %}">&laquo; first</a>
+                    <a href="?page={{ comments.previous_page_number }}{% if request.GET.sort_by %}&sort_by={{ request.GET.sort_by }}{% endif %}">previous</a>
+                {% endif %}
+                <span class="current">
+                    Page {{ comments.number }} of {{ comments.paginator.num_pages }}.
+                </span>
+                {% if comments.has_next %}
+                    <a href="?page={{ comments.next_page_number }}{% if request.GET.sort_by %}&sort_by={{ request.GET.sort_by }}{% endif %}">next</a>
+                    <a href="?page={{ comments.paginator.num_pages }}{% if request.GET.sort_by %}&sort_by={{ request.GET.sort_by }}{% endif %}">last &raquo;</a>
+                {% endif %}
+            </span>
         </div>
         <!-- Конец третьего комментария -->
 
         <!-- Кнопка для добавления комментария -->
-        <button class="add-comment-btn" onclick="document.getElementById('commentModal').style.display='block'">Добавить
-            комментарий</button>
+       
 
     </div>
 
@@ -76,11 +103,7 @@
 
 
     {% if not request.user.is_authenticated %}
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        openModal('loginModal');
-      });
-    </script>
+    <script src="{% static 'app_main/auth_form.js' %}"></script>
     {% endif %}
 
     <!-- Подключение JavaScript -->
@@ -89,6 +112,12 @@
     <script src="{% static 'app_main/auth.js' %}"></script>
     <script src="{% static 'app_main/base.js' %}"></script>
     <script src="{% static 'app_main/reply_comment.js' %}"></script>
+    <script src="{% static 'app_main/js_for_addtags.js' %}"></script>
+    <script src="{% static 'app_comments/more_data.js' %}"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+        
+        
+
    
 </body>
 

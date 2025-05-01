@@ -1,11 +1,12 @@
+from django.shortcuts import redirect
 from django.views.generic.edit import FormView
 from django.views import View
 from django.http import JsonResponse, HttpResponseRedirect, HttpRequest, HttpResponse
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth import authenticate, login as auth_login
 from .forms import UserRegisterForm, UserLoginForm
-from django.contrib import messages
-
+from django.contrib import auth, messages
+from django.contrib.auth.decorators import login_required
 
 class RegistrationView(FormView):
     """
@@ -67,3 +68,11 @@ class LoginView(View):
 
         # Если форма невалидна — возвращаем ошибки
         return JsonResponse({'errors': form.errors.as_json()}, status=400)
+
+
+
+
+@login_required
+def logout(request):
+    auth.logout(request)
+    return redirect(reverse('main:main'))

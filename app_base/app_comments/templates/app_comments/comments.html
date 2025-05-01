@@ -1,64 +1,9 @@
 {% load static %}
 
-{% block comments %}
-<!-- Начало первого комментария -->
-{% for comment in comments %}
-    {% if comment.parent is None %}
-    
-        <div class="comment-card" data-comment-id="{{ comment.id }}">
-            
-            <div class="comment-header">
-                <!-- Проверка, есть ли изображение у комментария -->
-                <a href="{% if comment.user.avatar %}{{ comment.user.avatar.url }}{% else %}{% static 'default-avatar.png' %}{% endif %}" data-lightbox="models" data-title="Это аватар пользователя">
-                    <img src="{% if comment.user.avatar %}{{ comment.user.avatar.url }}{% else %}{% static 'default-avatar.png' %}{% endif %}" alt="аватар" class="thumbnail">
-                </a>
-                <!-- Аватар пользователя -->
-                <div class="comment-meta">{{ comment.user.username }} | <span>{{ comment.created_at|date:"d M Y" }}</span></div> <!-- Данные о пользователе и дате -->
-            </div>
-            <div class="comment-text">{{ comment.text }}</div>
-
-            {% if comment.image %}
-                <div class="comment-image">
-                    <a href="{{ comment.image.url }}" data-lightbox="models" data-title="Это изображение в комментарии">
-                        <img src="{{ comment.image.url }}" alt="Изображение в комментарии" class="comment-img">
-                    </a>
-                </div>
-            {% endif %}
-
-            <div class="comment-actions">
-                <button class="reply-btn" data-parent-id="{{ comment.id }}">Reply</button> <!-- Кнопка ответа -->
-                <button onclick="toggleReplies(this)">Show answers</button> <!-- Кнопка показа/скрытия ответов -->
-                <button onclick="">Delete</button>
-            </div>
-
-            <!-- Ответы на комментарий -->
-            <div class="replies" style="display: none;">
-                {% for reply in comment.replies.all %}
-                    <div class="comment-card">
-                        <div class="comment-header">
-                            <a href="{% if reply.user.avatar %}{{ reply.user.avatar.url }}{% else %}{% static 'default-avatar.png' %}{% endif %}" data-lightbox="models" data-title="Это аватар пользователя">
-                                <img src="{% if reply.user.avatar %}{{ reply.user.avatar.url }}{% else %}{% static 'default-avatar.png' %}{% endif %}" alt="аватар" class="thumbnail">
-                            </a>
-                            <div class="comment-meta">{{ reply.user.username }} | <span>{{ reply.created_at|date:"d M Y" }}</span></div>
-                        </div>
-                        <blockquote class="reply-to-comment">{{ reply.parent.text }}</blockquote>
-                        <div class="comment-text">{{ reply.text }}</div>
-                        {% if reply.image %}
-                        <div class="comment-image">
-                            <a href="{{ reply.image.url }}" data-lightbox="models" data-title="Это изображение в комментарии">
-                                <img src="{{ reply.image.url }}" alt="Изображение в комментарии" class="comment-img">
-                            </a>
-                        </div>
-                    {% endif %}
-                        <div class="comment-actions">
-                            <button onclick="toggleReplies(this)">Show answers</button> <!-- Кнопка показа/скрытия ответов -->
-                            <button class="reply-btn " data-parent-id="{{ comment.id }}">Reply</button> <!-- Кнопка ответа -->
-                            <button onclick="">Delete</button>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    {% endif %}
-{% endfor %}
-{% endblock comments %}
+<div id="comments-container">
+    {% for comment in comments %}
+        {% if comment.parent is None %}
+            {% include "app_comments/single_comment.html" with comment=comment %}
+        {% endif %}
+    {% endfor %}
+</div>

@@ -8,6 +8,8 @@ app_name = 'comment'
 
 
 urlpatterns = [
-    path('add-comment/', views.add, name='add_comment'),
-    path('reply/', views.add_reply, name='reply_comment'),
+    path('add-comment/', views.AddCommentView.as_view(), name='add_comment'),
+    path('reply/', views.AddReplyView.as_view(), name='reply_comment'),
+    path('get-replies/<int:comment_id>/', views.CommentRepliesView.as_view(), name='load_replies'),
+    
 ]

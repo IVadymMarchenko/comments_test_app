@@ -1,12 +1,13 @@
 from django import forms
 from .models import Comment
 from django.core.exceptions import ValidationError
-
+from captcha.fields import CaptchaField
 
 class CommentForm(forms.ModelForm):
     text = forms.CharField(widget=forms.Textarea)
     image = forms.FileField(required=False)
     parent_id = forms.IntegerField(widget=forms.HiddenInput, required=False)
+    #captcha = CaptchaField() 
 
     class Meta:
         model = Comment

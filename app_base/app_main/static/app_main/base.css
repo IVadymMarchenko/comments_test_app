@@ -90,31 +90,33 @@ body {
   /* Ответы на комментарии */
   .replies {
     margin-top: 15px;
-    padding-left: 20px;
+    padding-left: 25px;
     border-left: 3px dashed #d0d0d0;
-    max-height: 400px;
+    max-height: 600px;
     overflow-y: auto;
   }
   
   /* Кнопка "Добавить комментарий" */
   .add-comment-btn {
-    display: block;
-    width: 100%;
-    max-width: 300px;
-    margin: 40px auto 0;
-    background: #3498db;
-    color: #fff;
-    padding: 12px 20px;
+    position: fixed; /* Фіксує кнопку на екрані */
+    bottom: 60px; /* Відступ від нижнього краю екрана (залиште місце для можливих елементів під кнопкою) */
+    left: 50%; /* Розміщує лівий край кнопки в центрі екрана */
+    transform: translateX(-50%); /* Зсуває кнопку на половину її ширини вліво, щоб центрувати */
+    background-color: #007bff; /* Синій колір фону */
+    color: white; /* Білий колір тексту */
     border: none;
-    border-radius: 12px;
-    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  .add-comment-btn:hover {
-    background: #2980b9;
-  }
+    font-size: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Додає легку тінь */
+    z-index: 1000; /* Забезпечує відображення поверх іншого контенту */
+    transition: background-color 0.3s ease; /* Плавний перехід кольору фону при наведенні */
+}
+
+.add-comment-btn:hover {
+    background-color: #0056b3; /* Темніший синій колір при наведенні */
+}
   
   /* Модальное окно */
   .modal {
@@ -263,7 +265,12 @@ input[type="file"] {
 .comment-card {
   margin-bottom: 20px;
 }
-
+.comment-text {
+  overflow: hidden; /* Приховує вміст, який виходить за межі елемента */
+  text-overflow: ellipsis; /* Відображає три крапки для обрізаного тексту */
+  white-space: pre-wrap; /* Дозволяє переноси рядків, але запобігає надто довгим нерозривним рядкам */
+  word-break: break-word; /* Примусово розриває довгі слова, якщо вони не вміщаються */
+}
 
 /** модальные окна регистрации и авторизации**/
 .modal-btn {
@@ -279,9 +286,7 @@ input[type="file"] {
   
 }
 
-.modal-btn:hover {
-  background-color: #2164a6;
-}
+
 
 .modal-overlay {
   display: none;
@@ -486,3 +491,57 @@ input[type="file"] {
 .messages li.error::before {
   content: "⚠";
 }
+
+
+.editor-buttons button {
+
+  background: none;
+  
+  border: none;
+  
+  color: #3498db;
+  
+  cursor: pointer;
+  
+  padding: 5px 0;
+  
+  margin-right: 10px;
+  
+  font-size: 14px;
+  
+  transition: color 0.2s ease;
+  
+  }
+
+
+
+  .load-more-replies-btn {
+    background-color: #05203d;       
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.load-more-replies-btn:hover {
+    background-color: #0056b3; 
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.load-more-replies-btn:active {
+    background-color: #004494;
+}
+
+.load-more-replies-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    color: #666666;
+}
+
+

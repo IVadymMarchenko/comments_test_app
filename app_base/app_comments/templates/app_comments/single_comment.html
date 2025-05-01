@@ -1,12 +1,12 @@
 <div class="comment-card" data-comment-id="{{ comment.id }}">
     <div class="comment-header">
-        <a href="{% if comment.user.avatar %}{{ comment.user.avatar.url }}{% endif %}" data-lightbox="models" data-title="Это аватар пользователя">
-            <img src="{% if comment.user.avatar %}{{ comment.user.avatar.url }}{% endif %}" alt="аватар" class="thumbnail">
+        <a href="{% if comment.user.avatar %}{{ comment.user.avatar.url }}{% else %}/media/avatars/avatar.png{% endif %}" data-lightbox="models" data-title="Это аватар пользователя">
+            <img src="{% if comment.user.avatar %}{{ comment.user.avatar.url }}{% else %}/media/avatars/avatar.png{% endif %}" alt="аватар" class="thumbnail">
         </a>
         <div class="comment-meta">{{ comment.user.username }} | <span>{{ comment.created_at|date:"d M Y" }}</span></div>
     </div>
-    <div class="comment-text">{{ comment.text }}</div>
-    
+    <div class="comment-text">{{ comment.text|safe }}</div>
+
     {% if comment.image %}
         <div class="comment-image">
             <a href="{{ comment.image.url }}" data-lightbox="models" data-title="Это изображение в комментарии">
@@ -17,33 +17,22 @@
 
     <div class="comment-actions">
         <button class="reply-btn" data-parent-id="{{ comment.id }}">Reply</button>
-        <button onclick="toggleReplies(this)">Show answers</button>
-        <button onclick="">Delete</button>
+        {% if comment.replies.exists%}
+        <button hx-get="{% url 'comment:load_replies' comment_id=comment.id %}?page=1&initial_load=true"
+                hx-target="#replies-container-{{ comment.id }}"
+                hx-swap="innerHTML"
+                class="show-replies-btn" onclick="toggleReplies(this)" onclick="toggleReplies(this)">
+            Show replies
+            {% if comment.replies.count > 0 %}
+                ({{ comment.replies.count }})
+            {% endif %}
+        </button>
+        {% endif %}
+        {% if request.user == comment.user %}
+            <button onclick="">Delete</button>
+        {% endif %}
     </div>
 
-    <div class="replies" style="display: none;">
-        {% for reply in comment.replies.all %}
-            <div class="comment-card">
-                <div class="comment-header">
-                    <a href="{% if reply.user.avatar %}{{ reply.user.avatar.url }}{% endif %}" data-lightbox="models" data-title="Это аватар пользователя">
-                        <img src="{% if reply.user.avatar %}{{ reply.user.avatar.url }}{% endif %}" alt="аватар" class="thumbnail">
-                    </a>
-                    <div class="comment-meta">{{ reply.user.username }} | <span>{{ reply.created_at|date:"d M Y" }}</span></div>
-                </div>
-                <blockquote class="reply-to-comment">{{ reply.parent.text }}</blockquote>
-                <div class="comment-text">{{ reply.text }}</div>
-                {% if reply.image %}
-                    <div class="comment-image">
-                        <a href="{{ reply.image.url }}" data-lightbox="models" data-title="Это изображение в ответе">
-                            <img src="{{ reply.image.url }}" alt="Изображение в ответе" class="comment-img">
-                        </a>
-                    </div>
-                {% endif %}
-                <div class="comment-actions">
-                    <button class="reply-btn" data-parent-id="{{ reply.id }}">Reply</button>
-                    <button onclick="">Delete</button>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+    <div id="replies-container-{{ comment.id }}" style="display: none;">
+        </div>
 </div>

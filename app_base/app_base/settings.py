@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
 
     "django_unicorn",
+    'captcha',
 
 
     'app_main',
@@ -138,3 +139,21 @@ AUTH_USER_MODEL = 'app_users.CustomUser'  # Замените 'yourapp' на им
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+# Разрешённые теги для сообщений
+ALLOWED_TAGS = [
+    'a',
+    'abbr',
+    'acronym',
+    'b',
+    'blockquote',
+    'code',
+    'em',
+    'i',
+    'li',
+    'ol',
+    'strong',
+    'ul',
+]
+ALLOWED_ATTRIBUTES = {'a': ['href', 'title'],} # Для тега <a> атрибуты href и title

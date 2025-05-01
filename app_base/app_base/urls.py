@@ -28,7 +28,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('app_main.urls',namespace='main')),
     path('user/',include('app_users.urls',namespace='user')),
-    path('comments/',include('app_comments.urls',namespace='comment'))
+    path('comments/',include('app_comments.urls',namespace='comment')),
+    path('captcha/', include('captcha.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

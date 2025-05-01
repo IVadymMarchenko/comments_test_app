@@ -1,0 +1,20 @@
+<div id="replies-list-inner-{{ parent_id }}">
+    {% for reply in replies %}
+        {% include "app_comments/single_reply.html" with comment=reply %}
+    {% empty %}
+        <p class="no-replies">No replies yet.</p>
+    {% endfor %}
+
+    {% if replies.has_next %}
+        <div hx-get="{% url 'comment:load_replies' comment_id=parent_id %}?page={{ replies.next_page_number }}"
+             hx-target="#replies-list-inner-{{ parent_id }}"
+             hx-swap="beforeend"
+             class="load-more-container">
+            
+            <button class="load-more-replies-btn">Load more</button>
+          
+        </div>
+    {% endif %}
+</div>
+
+

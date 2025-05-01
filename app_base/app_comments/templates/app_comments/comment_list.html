@@ -1,0 +1,5 @@
+{% for comment in comments %}
+    {% if comment.parent is None %}
+        {% include "app_comments/single_comment.html" with comment=comment %}
+    {% endif %}
+{% endfor %}
