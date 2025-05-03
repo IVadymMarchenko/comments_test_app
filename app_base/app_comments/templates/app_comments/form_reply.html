@@ -12,6 +12,11 @@
                 <button type="button" class="editor-button" onclick="insertTag('[strong]', '[/strong]', 'replyText')">[strong]</button>
                 <button type="button" class="editor-button" onclick="insertTag('[code]', '[/code]', 'replyText')">[code]</button>
             </div>
+            <div class="reply-preview">
+                <h3>Preview:</h3>
+                <div id="replyPreviewContent"></div>
+            </div>
+            
             <div class="file-upload-wrapper">
                 <label for="replyFileInput" class="custom-file-upload">
                     📎Select file
@@ -22,7 +27,7 @@
                     <a id="remove-reply-file" class="remove-file" style="display:none;">✖</a>
                 </div>
             </div>
-           
+            <div id="previewContainerReply"></div> 
             <button type="submit">Send reply</button>
         </form>
     </div>

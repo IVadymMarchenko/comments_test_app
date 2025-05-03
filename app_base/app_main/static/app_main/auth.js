@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const sizeKB = file.size / 1024;
     const extension = file.name.split('.').pop().toLowerCase();
 
-    // Если это .txt, то проверяем на 100KB
+    // Если это .txt, то провер на 100KB
     if (extension === "txt") {
       if (sizeKB > 100) {
         displayError(errorFieldId, `TXT file is too large: (${Math.round(sizeKB)}KB). Maximum: 100KB.`);

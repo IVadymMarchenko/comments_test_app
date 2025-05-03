@@ -21,7 +21,7 @@ from django.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
 from app_main import views
-
+from debug_toolbar.toolbar import debug_toolbar_urls
 
 
 urlpatterns = [
@@ -30,7 +30,7 @@ urlpatterns = [
     path('user/',include('app_users.urls',namespace='user')),
     path('comments/',include('app_comments.urls',namespace='comment')),
     path('captcha/', include('captcha.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)+ debug_toolbar_urls()
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.BASE_DIR / 'static')

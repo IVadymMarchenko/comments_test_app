@@ -21,7 +21,12 @@
     {% endif %}
 
     <div class="comment-actions">
+        {% if user.is_authenticated %}
         <button class="reply-btn" data-parent-id="{{ comment.id }}">Reply</button>
+        {% else %}
+       <!-- Если не авторизован — открываем модалку входа -->
+            <button class="" onclick="document.getElementById('loginModal').style.display='block'">Reply</button>
+        {% endif %}
         {% if comment.replies.exists %}
             <button
                 hx-get="{% url 'comment:load_replies' comment_id=comment.id %}?page=1&initial_load=true"

@@ -1,20 +1,21 @@
 import json
-from django.shortcuts import render
-from django.views.generic import CreateView
-from .forms import CommentForm
-from .models import Comment
-from django.shortcuts import render
-from django.template.loader import render_to_string
-from django.http import JsonResponse
-from .forms import CommentForm
-from .models import Comment
-from app_base import settings
 import bleach
-from .utils import convert_special_tags_to_html
-from django.core.paginator import Paginator
-from django.shortcuts import get_object_or_404, render
+
+
+
+from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
+from django.template.loader import render_to_string
 from django.views import View
+from django.views.generic import CreateView
+from django.core.paginator import Paginator
+
+from .forms import CommentForm
 from .models import Comment
+from .utils import convert_special_tags_to_html
+from .image_resize import resize_image_pillow
+
+from app_base import settings
 
 
 class AddCommentView(CreateView):
@@ -38,6 +39,12 @@ class AddCommentView(CreateView):
         cleaned_text = bleach.clean(cleaned_text, tags=settings.ALLOWED_TAGS, attributes=settings.ALLOWED_ATTRIBUTES)
 
         comment.text = cleaned_text
+
+         # 3. Обрабатываем изображение, если оно есть и больше нужных размеров
+        if 'image' in self.request.FILES:
+            image_file = self.request.FILES['image']
+            comment.image = resize_image_pillow(image_file)
+            
         comment.save()
 
         html = render_to_string("app_comments/single_comment.html", {"comment": comment}, request=self.request)
@@ -110,13 +117,15 @@ class AddReplyView(CreateView):
         return JsonResponse({"success": False, "errors": errors_dict}, status=400)
 
 
-# app_comments/views.py
+
 class CommentRepliesView(View):
+
+
     def get(self, request, comment_id):
         parent_comment = get_object_or_404(Comment, id=comment_id)
         replies = parent_comment.replies.all().order_by('-created_at')
         page_number = int(request.GET.get('page', 1))
-        paginator = Paginator(replies, 2)  # Количество ответов на странице
+        paginator = Paginator(replies, 8)  # Количество ответов на странице
         page_obj = paginator.get_page(page_number)
         initial_load = request.GET.get('initial_load', False)
 

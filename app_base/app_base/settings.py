@@ -40,7 +40,8 @@ INSTALLED_APPS = [
 
 
     "django_unicorn",
-    'captcha',
+    "captcha",
+    "debug_toolbar",
 
 
     'app_main',
@@ -56,6 +57,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+
+     "debug_toolbar.middleware.DebugToolbarMiddleware",
+
+
+    
 ]
 
 ROOT_URLCONF = 'app_base.urls'
@@ -119,6 +126,16 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+         'LOCATION': 'redis://redis:6379/1',  # Имя сервиса Redis из docker-compose.yml  # Используется первый Redis-инстанс
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
 
 
 # Static files (CSS, JavaScript, Images)

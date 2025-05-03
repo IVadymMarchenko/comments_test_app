@@ -81,6 +81,7 @@ body {
     margin-right: 10px;
     font-size: 14px;
     transition: color 0.2s ease;
+    text-align: right; /* Добавьте или измените эту строку */
   }
   
   .comment-actions button:hover {
@@ -98,24 +99,24 @@ body {
   
   /* Кнопка "Добавить комментарий" */
   .add-comment-btn {
-    position: fixed; /* Фіксує кнопку на екрані */
-    bottom: 60px; /* Відступ від нижнього краю екрана (залиште місце для можливих елементів під кнопкою) */
-    left: 50%; /* Розміщує лівий край кнопки в центрі екрана */
-    transform: translateX(-50%); /* Зсуває кнопку на половину її ширини вліво, щоб центрувати */
-    background-color: #007bff; /* Синій колір фону */
-    color: white; /* Білий колір тексту */
+    position: fixed; 
+    bottom: 80px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    background-color: #007bff; 
+    color: white; 
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Додає легку тінь */
-    z-index: 1000; /* Забезпечує відображення поверх іншого контенту */
-    transition: background-color 0.3s ease; /* Плавний перехід кольору фону при наведенні */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+    z-index: 1000; 
+    transition: background-color 0.3s ease; 
 }
 
 .add-comment-btn:hover {
-    background-color: #0056b3; /* Темніший синій колір при наведенні */
+    background-color: #0056b3;
 }
   
   /* Модальное окно */
@@ -544,4 +545,57 @@ input[type="file"] {
     color: #666666;
 }
 
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 10px 0;
+  border-top: 1px solid #eee;
+}
+
+.pagination .step-links a {
+  padding: 8px 12px;
+  margin: 0 5px;
+  text-decoration: none;
+  color: #337ab7;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.pagination .step-links a:hover {
+  background-color: #f5f5f5;
+}
+
+.pagination .step-links .current {
+  padding: 8px 12px;
+  margin: 0 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.pagination .step-links a:first-child,
+.pagination .step-links a:last-child {
+  font-weight: bold;
+}
+
+#modal-info-message {
+  position: fixed; /* Закрепляет элемент на экране, независимо от прокрутки */
+  
+  left: 50%; /* Устанавливает левый край блока по центру экрана */
+  transform: translateX(-50%); /* Смещает блок влево на 50% его ширины — чтобы он оказался точно по центру */
+  font-size: 14px; /* уменьшенный размер текста */
+  color: rgb(94, 94, 207); /* Цвет текста */
+  background-color: #f0f8ff; /* Светло-голубой фон сообщения */
+  padding: 10px 20px; /* Внутренний отступ сверху/снизу 10px, слева/справа 20px */
+  border-radius: 5px; /* Скругляет углы блока */
+  
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Добавляет лёгкую тень под блоком */
+  opacity: 1; /* Полная видимость (значение 1 = 100% видимо) */
+  transition: opacity 0.5s ease-out; /* Анимация плавного исчезновения (если opacity изменить на 0) */
+  
+  z-index: 100; /* Устанавливает приоритет отображения — блок будет поверх других элементов */
+}
 

@@ -25,8 +25,14 @@
 </head>
 
 <body>
+    {% if user.is_authenticated %}
+    <!-- Показываем кнопку, которая открывает модалку комментария -->
     <button class="add-comment-btn" onclick="document.getElementById('commentModal').style.display='block'">Add Comment</button>
-    <!-- Кнопка для открытия модального окна регистрации -->
+{% else %}
+    <!-- Показываем кнопку, которая открывает модалку входа -->
+    <button class="add-comment-btn" onclick="document.getElementById('loginModal').style.display='block'">Add Comment</button>
+{% endif %}
+
     <!-- Контейнер для всех элементов -->
     <div class="container">
         <!-- Кнопки -->

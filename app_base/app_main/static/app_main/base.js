@@ -1,16 +1,23 @@
+
 // Функция для переключения видимости ответов
 function toggleReplies(btn) {
-    const replies = btn.parentElement.nextElementSibling;
-    
-    // Проверка текущего состояния отображения
-    if (replies.style.display === 'none') {
+  const replies = btn.parentElement.nextElementSibling;
+  const commentId = btn.dataset.commentId; // Получаем ID комментария из data-атрибута
+
+  // Проверяем, сохранен ли уже исходный текст кнопки
+  if (!btn.dataset.originalText) {
+      btn.dataset.originalText = btn.innerHTML; // Сохраняем исходный HTML
+  }
+
+  // Проверка текущего состояния отображения
+  if (replies.style.display === 'none') {
       replies.style.display = 'block';
       btn.textContent = 'Hide answers';
-    } else {
+  } else {
       replies.style.display = 'none';
-      btn.textContent = 'Show answers';
-    }
+      btn.innerHTML = btn.dataset.originalText; // Восстанавливаем исходный HTML
   }
+}
   
   // Открытие модального окна для ответа
   function openReplyModal() {
@@ -513,30 +520,60 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // HTMX автоматически загрузит первую порцию ответов и кнопку "Load more"
 document.addEventListener('DOMContentLoaded', () => {
+  const originalButtonHTML = new Map(); // Сохраняем исходный HTML кнопок
+
   document.addEventListener('click', function(event) {
-      if (event.target.classList.contains('show-replies-btn')) {
-          const commentId = event.target.dataset.commentId;
-          const repliesContainer = document.getElementById(`replies-container-${commentId}`);
-          const button = event.target;
+    if (event.target.classList.contains('show-replies-btn')) {
+      const commentId = event.target.dataset.commentId;
+      const repliesContainer = document.getElementById(`replies-container-${commentId}`);
+      const button = event.target;
 
-          if (repliesContainer.style.display === 'none') {
-              repliesContainer.style.display = 'block';
-              button.textContent = 'Hide replies';
-
-              repliesContainer.addEventListener('htmx:afterSwap', function afterSwapHandler(event) {
-                  const loadMoreContainer = repliesContainer.querySelector('.load-more-container');
-                  if (loadMoreContainer) {
-                      loadMoreContainer.addEventListener('htmx:beforeRequest', function(evt) {
-                          evt.target.remove(); // Удаляем кнопку "Load more" перед запросом
-                      });
-                  }
-                  repliesContainer.removeEventListener('htmx:afterSwap', afterSwapHandler); // Очищаем обработчик
-              });
-          } else {
-              repliesContainer.style.display = 'none';
-              button.textContent = 'Show replies';
-          }
+      if (!originalButtonHTML.has(commentId)) {
+        originalButtonHTML.set(commentId, button.innerHTML); // Сохраняем исходный HTML
       }
+
+      if (repliesContainer.style.display === 'none') {
+        repliesContainer.style.display = 'block';
+        button.textContent = 'Hide replies';
+        // HTMX автоматически загрузит первую порцию ответов
+
+        repliesContainer.addEventListener('htmx:afterSwap', function afterSwapHandler(event) {
+          const loadMoreContainer = repliesContainer.querySelector('.load-more-container');
+          if (loadMoreContainer) {
+            loadMoreContainer.addEventListener('htmx:beforeRequest', function(evt) {
+              evt.target.remove(); // Удаляем кнопку "Load more" перед запросом
+            });
+          }
+          repliesContainer.removeEventListener('htmx:afterSwap', afterSwapHandler); // Очищаем обработчик
+        });
+      } else {
+        repliesContainer.style.display = 'none';
+        button.innerHTML = originalButtonHTML.get(commentId); // Восстанавливаем исходный HTML
+      }
+    }
   });
 });
 
+
+// Сообщение "войти или зарегистрироваться" исчезает через 5 секунд
+setTimeout(function() {
+  const infoMessage = document.getElementById('modal-info-message');
+  if (infoMessage) {
+    infoMessage.style.opacity = '0';
+    setTimeout(() => {
+      infoMessage.style.display = 'none'; // Скрываем элемент после анимации
+    }, 500);
+  }
+}, 5000);
+
+// Сообщения об ошибках/успехе исчезают через 4 секунд
+setTimeout(function() {
+  const messageContainer = document.getElementById('message-container');
+  if (messageContainer) {
+    messageContainer.style.transition = 'opacity 0.5s ease-out';
+    messageContainer.style.opacity = '0';
+    setTimeout(() => {
+      messageContainer.remove();  // Удаляем элемент из DOM
+    }, 500);  // Подождём, пока анимация завершится
+  }
+}, 4000);

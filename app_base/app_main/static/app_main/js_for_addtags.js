@@ -93,3 +93,16 @@ function insertLink(elementId) {
     element.focus();
     //previewComment() - Попередній перегляд для відповідей може бути іншим або не потрібним
 }
+
+
+function previewReply() {
+    const replyText = document.getElementById('replyText').value;
+    const previewContent = document.getElementById('replyPreviewContent');
+
+    let previewHTML = replyText.replace(/\[i\](.*?)\[\/i\]/gs, '<em>$1</em>');
+    previewHTML = previewHTML.replace(/\[strong\](.*?)\[\/strong\]/gs, '<strong>$1</strong>');
+    previewHTML = previewHTML.replace(/\[code\](.*?)\[\/code\]/gs, '<code>$1</code>');
+    previewHTML = previewHTML.replace(/\[a href="(.*?)"](.*?)\[\/a\]/gs, '<a href="$1">$2</a>');
+
+    previewContent.innerHTML = previewHTML;
+}

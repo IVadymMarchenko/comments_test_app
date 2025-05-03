@@ -27,7 +27,7 @@ class RegistrationView(FormView):
         return JsonResponse({
             'success': True,
             'message': 'Registration successful',
-            'redirect': self.success_url  # URL для редиректа (на фронте)
+            'redirect': self.success_url  # URL для редиректа 
         }, status=200)
 
     def form_invalid(self, form: UserRegisterForm) -> JsonResponse:
@@ -68,6 +68,7 @@ class LoginView(View):
 
         # Если форма невалидна — возвращаем ошибки
         return JsonResponse({'errors': form.errors.as_json()}, status=400)
+
 
 
 

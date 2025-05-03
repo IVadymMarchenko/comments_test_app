@@ -1,3 +1,4 @@
+{% load filters %}
 <div class="comment-card" data-comment-id="{{ comment.id }}">
     <div class="comment-header">
         <a href="{% if comment.user.avatar %}{{ comment.user.avatar.url }}{% else %}/media/avatars/avatar.png{% endif %}" data-lightbox="models" data-title="Это аватар пользователя">
@@ -8,20 +9,34 @@
     <div class="comment-text">{{ comment.text|safe }}</div>
 
     {% if comment.image %}
+    {% if comment.image.name|endswith:".txt" %}
+        <div class="comment-file">
+            <a href="{{ comment.image.url }}" download>
+                📄Download text file
+            </a>
+        </div>
+    {% else %}
         <div class="comment-image">
             <a href="{{ comment.image.url }}" data-lightbox="models" data-title="Это изображение в комментарии">
                 <img src="{{ comment.image.url }}" alt="Изображение в комментарии" class="comment-img">
             </a>
         </div>
     {% endif %}
+{% endif %}
+
 
     <div class="comment-actions">
+        {% if user.is_authenticated %}
         <button class="reply-btn" data-parent-id="{{ comment.id }}">Reply</button>
+        {% else %}
+       <!-- Если не авторизован — открываем модалку входа -->
+            <button class="" onclick="document.getElementById('loginModal').style.display='block'">Reply</button>
+        {% endif %}
         {% if comment.replies.exists%}
         <button hx-get="{% url 'comment:load_replies' comment_id=comment.id %}?page=1&initial_load=true"
                 hx-target="#replies-container-{{ comment.id }}"
                 hx-swap="innerHTML"
-                class="show-replies-btn" onclick="toggleReplies(this)" onclick="toggleReplies(this)">
+                class="show-replies-btn" onclick="toggleReplies(this)">
             Show replies
             {% if comment.replies.count > 0 %}
                 ({{ comment.replies.count }})
