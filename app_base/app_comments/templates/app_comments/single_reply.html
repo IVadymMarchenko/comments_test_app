@@ -37,8 +37,8 @@
                 Show answers ({{ comment.replies.count }})
             </button>
         {% endif %}
-        {% if request.user == comment.user %}
-            <button onclick="">Delete</button>
+         {% if request.user == comment.user %}
+        <button class="delete-comment-btn" id="comment-{{ comment.id }}" data-comment-id="{{ comment.id }}">Delete</button>
         {% endif %}
     </div>
 
