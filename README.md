@@ -30,8 +30,8 @@
     git clone https://github.com/IVadymMarchenko/comments_test_app.git
     cd comments_test_app
     cd app_base
-   docker-compose build
-   http://localhost:8000
+    docker-compose build
+    http://localhost:8000
 
 
     
