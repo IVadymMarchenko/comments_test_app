@@ -30,7 +30,7 @@
     git clone https://github.com/IVadymMarchenko/comments_test_app.git
     cd comments_test_app
     cd app_base
-    docker-compose up --build
+   docker-compose build --no-cache
     http://localhost:8000
 
 
