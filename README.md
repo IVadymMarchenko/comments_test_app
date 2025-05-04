@@ -30,6 +30,7 @@
     cd comments_test_app
     cd app_base
     docker-compose up --build
+    http://localhost:8000
 
 
     
