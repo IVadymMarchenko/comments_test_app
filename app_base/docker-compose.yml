@@ -10,33 +10,14 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DB_NAME=postgres
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
-      - DB_HOST=db
-      - DB_PORT=5432
+      - DB_NAME=sqlite3
+      - DB_USER=default
+      - DB_PASSWORD=default
     depends_on:
-      - db
       - redis
-
-  db:
-    image: postgres:14
-    container_name: postgres_db
-    restart: always
-    environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
 
   redis:
     image: redis:7
     container_name: redis_cache
     ports:
       - "6379:6379"
-
-volumes:
-  postgres_data:
