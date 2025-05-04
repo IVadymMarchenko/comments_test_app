@@ -1,14 +1,13 @@
 import json
 import bleach
 
-
-
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.views import View
 from django.views.generic import CreateView
 from django.core.paginator import Paginator
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import CommentForm
 from .models import Comment
@@ -140,9 +139,17 @@ class CommentRepliesView(View):
             
 
 
-
-
-
+class DeleteCommentView(LoginRequiredMixin, View):
+    def post(self, request, comment_id):
+        try:
+            comment = get_object_or_404(Comment, id=comment_id)
+            if request.user == comment.user or request.user.is_staff:
+                comment.delete()
+                return JsonResponse({"success": True, "message": "Comment successfully deleted."})
+            else:
+                return JsonResponse({"success": False, "error": "You do not have permission to delete this comment."}, status=403)
+        except Exception as e:
+            return JsonResponse({"success": False, "error": f"An error occurred while deleting the comment.{e}"}, status=500)
 
 
 

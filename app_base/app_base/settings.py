@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -91,10 +92,15 @@ WSGI_APPLICATION = 'app_base.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',  # Указывает, что используем PostgreSQL как базу данных
+        'NAME': os.environ.get('DB_NAME', 'postgres'),       # Название базы. Берётся из переменной окружения DB_NAME, по умолчанию "postgres"
+        'USER': os.environ.get('DB_USER', 'postgres'),       # Имя пользователя PostgreSQL
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'postgres'), # Пароль пользователя
+        'HOST': os.environ.get('DB_HOST', 'db'),             # Имя хоста, где работает база (в Docker это имя сервиса — "db")
+        'PORT': os.environ.get('DB_PORT', '5432'),           # Порт, на котором PostgreSQL слушает подключения (обычно 5432)
     }
 }
+
 
 
 # Password validation
@@ -130,13 +136,17 @@ USE_TZ = True
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-         'LOCATION': 'redis://redis:6379/1',  # Имя сервиса Redis из docker-compose.yml  # Используется первый Redis-инстанс
+         'LOCATION': 'redis://redis:6379/1',  
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }
     }
 }
-
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
