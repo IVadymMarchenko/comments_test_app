@@ -43,9 +43,7 @@
             {% endif %}
         </button>
         {% endif %}
-        {% if request.user == comment.user %}
-        <button class="delete-comment-btn" id="comment-{{ comment.id }}" data-comment-id="{{ comment.id }}">Delete</button>
-        {% endif %}
+        
     </div>
 
     <div id="replies-container-{{ comment.id }}" style="display: none;">
